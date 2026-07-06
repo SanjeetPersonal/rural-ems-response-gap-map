@@ -31,12 +31,15 @@ export function MapView() {
 
     map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
 
+    // The flex container can measure 0-wide mid-hydration, making MapLibre
+    // fall back to its 400x300 default canvas and never recover. Re-sync the
+    // canvas whenever the container gets its real size.
+    const resizeObserver = new ResizeObserver(() => map.resize());
+    resizeObserver.observe(containerRef.current);
+
     const popup = new maplibregl.Popup({ closeButton: false, closeOnClick: false });
 
     map.on("load", () => {
-      // The container can settle to its final flex size after MapLibre
-      // measures it, and some environments don't deliver the ResizeObserver
-      // callback MapLibre relies on -- re-sync once the style is ready.
       map.resize();
 
       map.addSource("zctas", {
@@ -103,6 +106,7 @@ export function MapView() {
     });
 
     return () => {
+      resizeObserver.disconnect();
       map.remove();
       maplibregl.removeProtocol("pmtiles");
     };
