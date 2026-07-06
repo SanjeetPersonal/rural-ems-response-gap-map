@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { MapView } from "@/components/Map/MapView";
+import { ZipSearchBox } from "@/components/Search/ZipSearchBox";
 
 export default function Home() {
   return (
@@ -13,7 +14,12 @@ export default function Home() {
           response times of 20-45+ minutes. Find your zip code to see the estimate for your area
           and what to do while you wait.
         </p>
-        <div className="mt-6 flex justify-center gap-3">
+
+        <div className="mt-6">
+          <ZipSearchBox />
+        </div>
+
+        <div className="mt-4 flex justify-center gap-3">
           <Link
             href="/guide"
             className="rounded-md bg-slate-900 text-white px-4 py-2 text-sm font-medium hover:bg-slate-800"
