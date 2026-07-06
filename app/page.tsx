@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { MapView } from "@/components/Map/MapView";
 
 export default function Home() {
   return (
@@ -28,8 +29,8 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="flex-1 flex items-center justify-center bg-slate-100 border-t border-slate-200">
-        <p className="text-slate-500 text-sm">Map loading...</p>
+      <section className="flex-1 flex border-t border-slate-200 min-h-[500px]">
+        <MapView />
       </section>
     </div>
   );
