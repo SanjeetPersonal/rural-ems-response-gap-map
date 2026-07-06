@@ -1,6 +1,8 @@
 import { writeFileSync, existsSync, mkdirSync } from "fs";
+import path from "path";
 import { HIFLD_EMS_STATIONS_URL, HIFLD_FIRE_STATIONS_URL } from "./sources.ts";
 import { fetchJson } from "./lib/http.ts";
+import { resolveFromScript } from "./lib/paths.ts";
 
 interface ArcgisFeature {
   type: "Feature";
@@ -50,24 +52,20 @@ async function fetchAllPages(
 }
 
 async function main() {
-  const outDir = new URL("./raw", import.meta.url);
+  const outDir = resolveFromScript(import.meta.url, "raw");
   if (!existsSync(outDir)) mkdirSync(outDir, { recursive: true });
 
   console.log("Fetching HIFLD EMS stations...");
   const ems = await fetchAllPages(HIFLD_EMS_STATIONS_URL, "EMS");
-  writeFileSync(
-    new URL("./ems_stations.geojson", outDir),
-    JSON.stringify({ type: "FeatureCollection", features: ems })
-  );
-  console.log(`Saved ${ems.length} EMS stations.`);
+  const emsPath = path.join(outDir, "ems_stations.geojson");
+  writeFileSync(emsPath, JSON.stringify({ type: "FeatureCollection", features: ems }));
+  console.log(`Saved ${ems.length} EMS stations -> ${emsPath}`);
 
   console.log("Fetching HIFLD Fire stations...");
   const fire = await fetchAllPages(HIFLD_FIRE_STATIONS_URL, "FIRE");
-  writeFileSync(
-    new URL("./fire_stations.geojson", outDir),
-    JSON.stringify({ type: "FeatureCollection", features: fire })
-  );
-  console.log(`Saved ${fire.length} Fire stations.`);
+  const firePath = path.join(outDir, "fire_stations.geojson");
+  writeFileSync(firePath, JSON.stringify({ type: "FeatureCollection", features: fire }));
+  console.log(`Saved ${fire.length} Fire stations -> ${firePath}`);
 }
 
 main().catch((err) => {

@@ -1,10 +1,12 @@
 import { writeFileSync, existsSync, mkdirSync } from "fs";
+import path from "path";
 import unzipper from "unzipper";
 import { CENSUS_GAZETTEER_ZCTA_URL } from "./sources.ts";
 import { fetchBuffer } from "./lib/http.ts";
+import { resolveFromScript } from "./lib/paths.ts";
 
 async function main() {
-  const outDir = new URL("./raw", import.meta.url);
+  const outDir = resolveFromScript(import.meta.url, "raw");
   if (!existsSync(outDir)) mkdirSync(outDir, { recursive: true });
 
   console.log("Downloading Census ZCTA Gazetteer file...");
@@ -15,9 +17,9 @@ async function main() {
   if (!txtEntry) throw new Error("No .txt file found inside Gazetteer zip");
 
   const content = await txtEntry.buffer();
-  const outPath = new URL("./zcta_centroids.txt", outDir);
+  const outPath = path.join(outDir, "zcta_centroids.txt");
   writeFileSync(outPath, content);
-  console.log(`Saved ${txtEntry.path} -> data-pipeline/raw/zcta_centroids.txt`);
+  console.log(`Saved ${txtEntry.path} -> ${outPath}`);
 }
 
 main().catch((err) => {
