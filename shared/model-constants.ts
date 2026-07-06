@@ -22,12 +22,15 @@ export interface ResponseBucket {
   color: string; // hex, used by both the map style and the legend
 }
 
+// Colors chosen for strong step-to-step contrast on a light basemap --
+// each adjacent pair differs in both hue and lightness so buckets stay
+// distinguishable at national zoom and for common color-vision deficiencies.
 export const RESPONSE_BUCKETS: ResponseBucket[] = [
-  { id: "under10", label: "Under 10 min", maxMinutes: 10, color: "#2e7d32" },
-  { id: "10to15", label: "10-15 min", maxMinutes: 15, color: "#9e9d24" },
-  { id: "15to20", label: "15-20 min", maxMinutes: 20, color: "#f9a825" },
-  { id: "20to30", label: "20-30 min", maxMinutes: 30, color: "#ef6c00" },
-  { id: "30plus", label: "30+ min", maxMinutes: null, color: "#c62828" },
+  { id: "under10", label: "Under 10 min", maxMinutes: 10, color: "#1a7a3c" },
+  { id: "10to15", label: "10-15 min", maxMinutes: 15, color: "#ffd60a" },
+  { id: "15to20", label: "15-20 min", maxMinutes: 20, color: "#f77f00" },
+  { id: "20to30", label: "20-30 min", maxMinutes: 30, color: "#d62828" },
+  { id: "30plus", label: "30+ min", maxMinutes: null, color: "#6a040f" },
 ];
 
 export function bucketForMinutes(minutes: number): ResponseBucket {

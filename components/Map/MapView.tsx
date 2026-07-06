@@ -34,6 +34,11 @@ export function MapView() {
     const popup = new maplibregl.Popup({ closeButton: false, closeOnClick: false });
 
     map.on("load", () => {
+      // The container can settle to its final flex size after MapLibre
+      // measures it, and some environments don't deliver the ResizeObserver
+      // callback MapLibre relies on -- re-sync once the style is ready.
+      map.resize();
+
       map.addSource("zctas", {
         type: "vector",
         url: `pmtiles://${window.location.origin}/tiles/zcta.pmtiles`,
@@ -46,7 +51,10 @@ export function MapView() {
         "source-layer": SOURCE_LAYER,
         paint: {
           "fill-color": buildChoroplethExpression() as maplibregl.ExpressionSpecification,
-          "fill-opacity": 0.65,
+          // High enough that bucket colors read as themselves rather than
+          // blending into the basemap, low enough that place labels and
+          // roads underneath stay legible when zoomed in.
+          "fill-opacity": 0.8,
         },
       });
 
