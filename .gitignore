@@ -10,8 +10,10 @@ out/
 *.tsbuildinfo
 .vercel
 
-# data pipeline: raw downloads and intermediate working files are large
-# and must never be swept in by the autopush cron
+# data pipeline: raw downloads, intermediate, and output are all
+# regenerable via `npm run all` -- the committed copy the app actually
+# serves lives in /public/data and /public/tiles instead
 /data-pipeline/raw/
 /data-pipeline/intermediate/
+/data-pipeline/output/
 /data-pipeline/node_modules/

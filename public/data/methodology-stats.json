@@ -1,0 +1,13 @@
+{
+  "zipCount": 33775,
+  "generatedAt": "2026-07-06",
+  "modelVersion": "v1",
+  "lowConfidenceCount": 14,
+  "dataSources": [
+    "HIFLD Emergency Medical Service (EMS) Stations",
+    "HIFLD Fire Stations",
+    "US Census Bureau 2024 ZCTA Gazetteer",
+    "US Census Bureau 2020 ZCTA Cartographic Boundaries (500k)",
+    "USDA ERS 2020 Rural-Urban Commuting Area (RUCA) Codes, ZIP code version"
+  ]
+}
