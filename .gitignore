@@ -3,6 +3,15 @@ node_modules/
 out/
 .env
 .env.local
+.env*
 .DS_Store
 *.log
 .scripts/autopush.log
+*.tsbuildinfo
+.vercel
+
+# data pipeline: raw downloads and intermediate working files are large
+# and must never be swept in by the autopush cron
+/data-pipeline/raw/
+/data-pipeline/intermediate/
+/data-pipeline/node_modules/

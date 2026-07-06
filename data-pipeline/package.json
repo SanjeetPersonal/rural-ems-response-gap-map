@@ -1,0 +1,30 @@
+{
+  "name": "rural-ems-data-pipeline",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "fetch:hifld": "tsx fetch-hifld.ts",
+    "fetch:gazetteer": "tsx fetch-census-gazetteer.ts",
+    "fetch:boundaries": "tsx fetch-census-boundaries.ts",
+    "fetch:rurality": "tsx fetch-rurality.ts",
+    "clean": "tsx clean.ts",
+    "compute:nearest": "tsx compute-nearest-station.ts",
+    "compute:estimate": "tsx compute-estimate.ts",
+    "build:lookup": "tsx build-zip-lookup.ts",
+    "build:tiles": "bash build-tiles.sh",
+    "validate": "tsx validate.ts",
+    "all": "tsx run-all.ts"
+  },
+  "dependencies": {
+    "kdbush": "^4.0.2",
+    "csv-parse": "^5.6.0",
+    "shapefile": "^0.6.6",
+    "unzipper": "^0.12.3"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "@types/node": "^22.10.2"
+  }
+}
